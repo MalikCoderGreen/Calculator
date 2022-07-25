@@ -28,15 +28,10 @@ class Calculator extends React.Component {
     
         // If the user enters in a non-zero number and zero is displayed.
         if(num !== '0' && this.state.outNum === '0'){
-            this.setState({outNum: num});
+            this.setState({ outNum: num });
             newExpr = this.state.expr;
-            // Expression is empty; no need for space.
-            // if(newExpr === '')
-            newExpr += `${num}`;
-            console.log(newExpr);
-            this.setState({expr: newExpr}, () => {
-                console.log('Expression: ' + this.state.expr);
-            });
+            newExpr += `${ num }`;
+            this.setState({ expr: newExpr });
             
             return;
         }
@@ -46,21 +41,17 @@ class Calculator extends React.Component {
         // User has entered in an operation symbol.
         if(newExpr[newExpr.length - 1] === '+' || newExpr[newExpr.length - 1] === '-'
             || newExpr[newExpr.length - 1] === '*' || newExpr[newExpr.length - 1] === '/'){
-            this.setState({outNum: num});
-            newExpr += ` ${num}`;
-            this.setState({outNum: num});
-            this.setState({expr: newExpr}, ()=> {
-                console.log(`Expr: ${this.state.expr}`);
-            });
+            this.setState({ outNum: num });
+            newExpr += ` ${ num }`;
+            this.setState({ outNum: num });
+            this.setState({ expr: newExpr });
             
             return;
         }
 
-        newExpr += `${num}`;
-        this.setState({outNum: this.state.outNum.concat(num)});
-        this.setState({expr: newExpr}, () => {
-            console.log('expr: ' + this.state.expr);
-        });
+        newExpr += `${ num }`;
+        this.setState({ outNum: this.state.outNum.concat(num) });
+        this.setState({ expr: newExpr });
         
     }
 
@@ -85,7 +76,7 @@ class Calculator extends React.Component {
         } else if(sym === '.'){
             newExpr = this.state.expr;
             newExpr += '.';
-            this.setState( {expr: newExpr });
+            this.setState( { expr: newExpr });
             let newOutNum = newExpr;
             this.setState( { outNum: newOutNum });
 
@@ -94,21 +85,16 @@ class Calculator extends React.Component {
         } else if(sym === '='){
 
             let finalExpr = this.state.expr;
-            console.log(`expr: ${finalExpr}`);
             const ans = simplify(finalExpr).toString();
-            console.log(ans);
-            this.setState({ outNum: ans });
+            this.setState({ outNum: eval(ans).toFixed(2) });
             return;
 
         }
 
-        console.log(sym);
         newExpr = this.state.expr;
-        newExpr += ` ${sym}`;  
-        this.setState({symClicked: sym});
-        this.setState({expr: newExpr}, () => {
-            console.log(`Expression: ${this.state.expr}`);
-        });
+        newExpr += ` ${ sym }`;  
+        this.setState({ symClicked: sym });
+        this.setState({ expr: newExpr });
         
     }
 
@@ -118,11 +104,11 @@ class Calculator extends React.Component {
             // Pass it to the OutputWindow child.
             <div className='outer-calc wrapper'>
                 <div className='ui container inner-calc'>
-                    <OutputWindow pressed={this.state.outNum} />
+                    <OutputWindow pressed={ this.state.outNum } />
                     <div className='buttons-div'>
                         <Buttons 
-                         numFunc={this.getNumClicked}
-                         symFunc={this.getSymClicked} 
+                         numFunc={ this.getNumClicked }
+                         symFunc={ this.getSymClicked } 
                          />
                     </div>
                 </div>
