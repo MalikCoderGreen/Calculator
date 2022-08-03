@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# React Calculator 
 
 Calculator webapp I made using Reactjs
 
